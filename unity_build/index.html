@@ -59,18 +59,20 @@
       window.addEventListener('resize', resizeGame);
       resizeGame(); 
 
-
       window.addScore = function(amount) {
-      // PostMessage is the "teleportation" tool for data between iframes
-      window.parent.postMessage({ 
-          type: "UNITY_SCORE", 
-          score: amount 
-      }, "*"); 
-};
+          // PostMessage is the "teleportation" tool for data between iframes
+          window.parent.postMessage({ 
+              type: "UNITY_SCORE", 
+              score: amount 
+          }, "*"); 
+      };
 
-      // --- 2. UNITY CONFIG (Using your ORIGINAL filenames) ---
+      // --- 2. UNITY CONFIG (Using your NEW filenames) ---
       function unityShowBanner(msg, type) {
         var warningBanner = document.querySelector("#unity-warning");
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
         var div = document.createElement('div');
         div.innerHTML = msg;
         warningBanner.appendChild(div);
@@ -79,17 +81,19 @@
           if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
           setTimeout(function() {
             warningBanner.removeChild(div);
+            updateBannerVisibility();
           }, 5000);
         }
+        updateBannerVisibility();
       }
 
       var buildUrl = "Build";
-      // These names are restored from your first version so the files load correctly
-      var loaderUrl = buildUrl + "/ArGameUnityBuildTestFolder.loader.js";
+      var loaderUrl = buildUrl + "/New Build of bulders.loader.js";
       var config = {
-        dataUrl: buildUrl + "/ArGameUnityBuildTestFolder.data",
-        frameworkUrl: buildUrl + "/ArGameUnityBuildTestFolder.framework.js",
-        codeUrl: buildUrl + "/ArGameUnityBuildTestFolder.wasm",
+        arguments: [],
+        dataUrl: buildUrl + "/New Build of bulders.data",
+        frameworkUrl: buildUrl + "/New Build of bulders.framework.js",
+        codeUrl: buildUrl + "/New Build of bulders.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "UnityARgame",
